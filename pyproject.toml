@@ -15,13 +15,13 @@ ignore_missing_imports = true
 check_untyped_defs = true
 
 [tool.poetry]
-name = "blueprint"
+name = "hello-world-api"
 version = "0.0.1"
 description = "A template to build python projects"
 authors = ["Luís Miranda <luistm@gmail.com>"]
 license = "The Unlicense"
 readme = "README.md"
-packages = [{ include = "blueprint", from = "src" }]
+packages = [{ include = "hello-world-api", from = "src" }]
 exclude = ["**/*_test.py"]
 
 [tool.poetry.dependencies]
