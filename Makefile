@@ -81,3 +81,11 @@ $(PROJECT_NAME):
 	poetry install
 	poetry run $(PROJECT_NAME)
 
+
+# Environment -------------------------------------------------------------------------------------
+
+dev-run: ## Runs the project in the development environment
+	docker compose down
+	docker compose up -d
+
+
