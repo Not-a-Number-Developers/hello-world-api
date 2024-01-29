@@ -1,5 +1,4 @@
 .DEFAULT_GOAL := help
-.PHONY: all
 
 PROJECT_NAME=$(shell grep "name" pyproject.toml | cut -d "\"" -f 2)
 
@@ -41,46 +40,23 @@ updatelatest: ## Update dependencies to latest available compatible versions
 # Configuration -----------------------------------------------------------------------------------
 
 setup: deps ## Sets up the development environment
-	poetry run pre-commit install
 
 # Static checks -----------------------------------------------------------------------------------
 
 check: ## Runs static checks on the code
-	poetry run pre-commit run --all
 
 # Tests -------------------------------------------------------------------------------------------
 
-unit-tests: ## Runs the unit tests
-	poetry run pytest ./src  -svv -m "not integration"
-
-integration-tests: ## Runs the integration tests
-	poetry run pytest ./src  -svv -m "integration"
-
-acceptance-tests: ## Runs the acceptance tests
-	poetry run pytest ./tests  -svv
-	
-tests: unit-tests integration-tests acceptance-tests  ## Runs all the tests
-
-coverage: ## Shows coverage in the browser
-	poetry run coverage run -m pytest .
-	poetry run coverage html
-	open htmlcov/index.html
+tests: ## Runs all the tests
+	docker compose down
+	docker compose up -d
+	curl --retry 5 --retry-all-errors --retry-delay 1 "http://127.0.0.1:80"
+	docker compose down
 
 future: ## Tests the code against multiple python versions
 	poetry export -f requirements.txt --output requirements.txt --with dev
 	poetry run nox
 	-rm requirements.txt
-
-# Packaging ---------------------------------------------------------------------------------------
-
-build:  ## Builds this project into a package
-	poetry build
-
-$(PROJECT_NAME):
-	@echo "Running $(PROJECT_NAME) in development mode"
-	poetry install
-	poetry run $(PROJECT_NAME)
-
 
 # Environment -------------------------------------------------------------------------------------
 
