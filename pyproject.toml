@@ -1,37 +1,12 @@
-[tool.bandit]
-exclude_dirs = ["tests", "features"]
-
-[tool.black]
-max-line-length = 120
-target-version = ['py310', 'py311', 'py312']
-
-[tool.isort]
-profile = "black"
-multi_line_output = 3
-
-[tool.mypy]
-ignore_missing_imports = true
-# https://stackoverflow.com/questions/62265366/does-mypy-only-type-check-a-function-if-it-declares-a-return-type
-check_untyped_defs = true
-
 [tool.poetry]
 name = "hello-world-api"
 version = "0.0.1"
-description = "A template to build python projects"
+description = "A fantastic api that returns a json with the hello world message"
 authors = ["Luís Miranda <luistm@gmail.com>"]
 license = "The Unlicense"
 readme = "README.md"
-packages = [{ include = "hello-world-api", from = "src" }]
-exclude = ["**/*_test.py"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 uvicorn = "^0.27.0"
 fastapi = "^0.109.0"
-
-[tool.poetry.group.dev.dependencies]
-nox = "^2023.4.22"
-pre-commit = "^3.6.0"
-
-[tool.pytest.ini_options]
-markers = ["integration: tags a test as integration tests"]

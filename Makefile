@@ -4,7 +4,7 @@ PROJECT_NAME=$(shell grep "name" pyproject.toml | cut -d "\"" -f 2)
 
 # Misc --------------------------------------------------------------------------------------------
 
-all: clean setup check tests future
+all: clean setup check tests
 
 help:
 	@# Got it from here: https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
@@ -52,11 +52,6 @@ tests: ## Runs all the tests
 	docker compose up -d
 	curl --retry 5 --retry-all-errors --retry-delay 1 "http://127.0.0.1:80"
 	docker compose down
-
-future: ## Tests the code against multiple python versions
-	poetry export -f requirements.txt --output requirements.txt --with dev
-	poetry run nox
-	-rm requirements.txt
 
 # Environment -------------------------------------------------------------------------------------
 
